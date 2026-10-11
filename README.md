@@ -30,20 +30,45 @@ would talk to it — and tells you exactly what changed, what broke, and what st
   → [See a sample report](examples/sample-qa-report.html) (download and open in a browser — sample data only).
 - **Scales with your org.** One agent or an entire app, one person or a distributed team syncing results
   through your own source control — no extra infrastructure required.
+- **Mock data, built in.** Sims can run against fake tool responses, so no real customer accounts are needed. Every report
+  shows which sims ran on mock data.
+- **Safety and boundary checks in their own suite.** Ready-made sims for crisis responses, tone, scope, privacy and prompt
+  injection. Each rule is tested once, from inside a real topic, so you know it still holds after a hand-off.
+- **Hidden problems surface.** A tool error the agent quietly recovers from is listed too, so a sim that passes after a retry
+  no longer hides a fault.
 - **Self-contained on SCRAPI alone.** No AI subscription required — the whole pipeline runs end to end on
   SCRAPI's own engine. Have Claude access? That's a bonus: layer in AI assistance for writing new test
   cases, spotting coverage gaps, and diagnosing failures, whenever you want it.
+
+## How it works
+
+Two commands, every time:
+
+```
+python pull-agent.py              # get the latest deployed agent
+python eval-agent.py <Agent>      # test it and write the results
+```
+
+The second command does the rest: it checks whether the agent's instructions changed since the saved baseline, keeps the mock
+data up to date, runs every simulated conversation three times (a conversation passes when most of its runs pass), and writes the
+findings log and a shareable report. The first run for an agent saves its baseline automatically. After you have reviewed a
+change and accepted it, one more command saves the new baseline. Want AI help diagnosing failures? Turn it on in one setting;
+everything else works without it.
 
 ## What a run leaves behind
 
 Every run adds a dated entry to your findings log, newest on top. This is a trimmed excerpt of one
 (sample data) — [the full log is here](examples/sample-findings.md):
 
+> **✅ Ready for Evaluation run** · **✅ Valid test cases: 6 (5 EN / 1 FR)** · **✅ Baseline created**
+>
 > **Status:** ⚠️ Ran 2026-10-06 14:30 PDT (17:30 EDT) — 4/6 passed; 2 fail(s): `billing_switch_to_autopay`,
 > `billing_change_due_date`.
 >
 > **Drift:** ⚠️ instructions changed since the baseline — a failure below may be a stale test rather than an
 > agent bug.
+>
+> **Mock data:** ✅ up to date. **Tool errors seen in this run** (including sims that still passed): `update_autopay`, `sign_in_widget`.
 >
 > #### Changed since last run
 > - **Pass rate:** 4/6 → 4/6 (no change)
@@ -56,8 +81,8 @@ Every run adds a dated entry to your findings log, newest on top. This is a trim
 >   - *Expected:* the bot reads back the billing cycle date before enrolling autopay.
 >   - *What happened:* the bot enrolled autopay without reading back the cycle date confirmation.
 
-Two things you don't get from a plain pass/fail number: what *changed* since last time, and a heads-up when
-the agent's own instructions moved underneath your tests.
+Three things you don't get from a plain pass/fail number: what *changed* since last time, a heads-up when the agent's own
+instructions moved underneath your tests, and the faults that a passing conversation was quietly hiding.
 
 ## Built for GECX
 

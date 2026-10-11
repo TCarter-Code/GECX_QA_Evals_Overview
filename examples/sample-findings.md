@@ -4,11 +4,33 @@ QA findings from `python eval-agent.py Billing_and_Payments` runs. **Newest run 
 
 ---
 
+<!-- status-block -->
+
+**✅ Ready for Evaluation run**
+
+**✅ Valid test cases: 6 (5 EN / 1 FR)**
+
+**✅ SIMS created, run on MOCK data**
+
+**✅ Baseline created**
+
+<!-- status-block -->
+
 ## <mark>2026-10-06 — Billing_and_Payments (2026-10-06_1430)</mark>
 
 **Status:** ⚠️ Ran 2026-10-06 14:30 PDT (17:30 EDT) — awaiting triage (not yet reviewed). 4/6 passed; 2 fail(s): `billing_switch_to_autopay`, `billing_change_due_date`. Confirm in console (goal-only fails may be artifacts).
 
 **Drift:** ⚠️ instructions changed since the baseline — instruction.txt. A failure below may be a stale test rather than an agent bug. Diffs: `scrapi-evals/Billing_and_Payments/_drift/` (run `--check` to regenerate them).
+
+**Mock data:** ON (platform returns the configured fake for any tool that has one deployed)
+
+### Mock data
+
+**Mock data on the app: ✅ up to date** (checked 2026-10-06 14:28)
+
+**Already current:** 8 · **Refreshed for this run:** none
+
+**Tool errors seen in this run** (including sims that still passed): `update_autopay` in 1 conversation(s) across 1 sim(s), 0 still passed; `sign_in_widget` in 2 conversation(s) across 2 sim(s), 2 still passed
 
 ### Changed since last run (vs `2026-10-01_0900`)
 - **Pass rate: 4/6 -> 4/6** (no change)
@@ -17,9 +39,10 @@ QA findings from `python eval-agent.py Billing_and_Payments` runs. **Newest run 
 - **Still failing:** billing_switch_to_autopay
 
 ### Auto-summary (raw)
-- **billing_switch_to_autopay** (1/1 runs failed) · session `sess-c1-ddd444` · 3 turns
+- **billing_switch_to_autopay** (1/1 runs failed) · session `sess-c1-ddd444` · 3 turns · mock data: on · **MANUALLY REVIEW** (not triaged)
+    - **tool error: `update_autopay`** — Backend error: autopay enrolment rejected (sample)
     - expectation "Bot reads back the billing cycle date for confirmation before enrolling autopay.": Bot enrolled autopay without reading back the cycle date confirmation line.
-- **billing_change_due_date** (1/1 runs failed) · session `sess-c1-eee555` · 4 turns
+- **billing_change_due_date** (1/1 runs failed) · session `sess-c1-eee555` · 4 turns · mock data: on · **MANUALLY REVIEW** (not triaged)
     - expectation "Bot confirms the requested due-date day falls within the allowed 1-28 range bef…": Bot moved the due date without first confirming the customer's requested day falls within the allowed 1-28 range per the billing-cycle constraint.
 
 ### Open (to be reviewed)

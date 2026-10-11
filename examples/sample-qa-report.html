@@ -24,11 +24,13 @@ th { background: #5A31C4; color: #fff; padding: 8px 12px; text-align: left; font
 <body>
 <div class="page">
 <h1>QA Report &mdash; Billing_and_Payments</h1>
-<div class="sub">Run: 2026-10-06_1430 &middot; 6 test case(s)</div>
+<div class="sub">Run: 2026-10-06_1430 &middot; 6 test case(s) &middot; Mock data: ON</div>
+
+<div style="font:700 10px sans-serif;color:#888;margin:10px 0 -6px;">EXAMPLE 1 &mdash; PASS (everything reverted)</div><div style="border-left:4px solid #3F9B0B;background:#F3FAFD;border-radius:4px;padding:10px 16px;margin:12px 0;font-size:11.5px;"><strong style="color:#3F9B0B;">Mock data revert check: PASS</strong> &mdash; 15 added for the run, 15 removed.</div><div style="font:700 10px sans-serif;color:#888;margin:10px 0 -6px;">EXAMPLE 2 &mdash; FAIL (one fake left on the app)</div><div style="border-left:4px solid #D6212B;background:#F3FAFD;border-radius:4px;padding:10px 16px;margin:12px 0;font-size:11.5px;"><strong style="color:#D6212B;">Mock data revert check: FAIL</strong> &mdash; 15 added for the run, 14 removed.<ul style="margin:6px 0 0 18px;"><li>billing_apis: script fake STILL ON the app</li></ul><div style="margin-top:8px;"><strong>How to fix</strong> (do not start another run until it passes):<ol style="margin:4px 0 0 18px;line-height:1.7;"><li>In your VS Code terminal, in this project folder, run <strong><code>python tool-fakes.py clear</code></strong>. It removes the fakes the script added and repeats the check; most failures are a temporary API error.</li><li>If it still fails, find <strong>billing_apis</strong> (named in the problem list above). This part is done in the <strong>CES console in your browser</strong>, not in VS Code: open the tool, click <strong>Mock tool response</strong>, turn off <strong>Use mock response</strong>, and clear the code box if it begins with the line <code># managed-by: eval-agent tool fakes</code>. If the box has code without that line, someone added it by hand: leave it and ask the tool&rsquo;s owner.</li><li>Then <strong>go back to VS Code</strong>, open the terminal, and run <strong><code>python tool-fakes.py status</code></strong>: nothing added by the script should be listed. If the tool is still listed, repeat step 2 for it.</li><li><em>Differs from its original state</em>: usually a fake added by hand on that tool that changed during the run. The script never touches those, so check with the tool&rsquo;s owner.</li><li><em>Missing now</em>: the tool was renamed or deleted during the run (for example an agent push). Pull the agent again and re-run.</li></ol></div></div>
 
 <div class="exec"><div style="font-size:11px;font-weight:800;color:#5A31C4;text-transform:uppercase;
      letter-spacing:.4px;margin-bottom:8px;">Executive Summary</div>
-<ul><li><strong>4/6 passed</strong> (67%).</li><li>Most common failure category: <strong>EXPECTATION_FAIL</strong> (2 case(s)).</li><li><strong>2</strong> failure(s) need to go back to the CA; <strong>0</strong> are QA's own to fix.</li><li>1 case(s) with a detected hallucination.</li></ul></div>
+<ul><li><strong>4/6 passed</strong> (67%).</li><li>Most common failure category: <strong>EXPECTATION_FAIL</strong> (1 case(s)).</li><li><strong>1</strong> failure(s) need to go back to the CA; <strong>0</strong> are QA's own to fix.</li><li>1 case(s) with a detected hallucination.</li><li><strong>Tool errors seen in this run</strong> (including sims that still passed): <strong>update_autopay</strong> &mdash; 1 conversation(s) in 1 sim(s), 0 still passed; <strong>sign_in_widget</strong> &mdash; 2 conversation(s) in 2 sim(s), 2 still passed.</li></ul></div>
 
 <div class="kpis">
   <div class="kpi"><div class="kpi-l">Total Cases</div><div class="kpi-v" style="color:#5A31C4;">6</div></div>
@@ -46,10 +48,10 @@ th { background: #5A31C4; color: #fff; padding: 8px 12px; text-align: left; font
 <div class="grid2">
   <div><h2 style="margin-top:0;">Failure Category Breakdown</h2>
     <table><thead><tr><th>Category</th><th style="text-align:right;">Cases</th></tr></thead>
-    <tbody><tr><td style="padding:7px 12px;border-bottom:1px solid #EEE;">EXPECTATION_FAIL</td><td style="padding:7px 12px;border-bottom:1px solid #EEE;text-align:right;"><strong style="color:#C0392B;">2</strong></td></tr></tbody></table></div>
+    <tbody><tr><td style="padding:7px 12px;border-bottom:1px solid #EEE;">EXPECTATION_FAIL</td><td style="padding:7px 12px;border-bottom:1px solid #EEE;text-align:right;"><strong style="color:#C0392B;">1</strong></td></tr></tbody></table></div>
   <div><h2 style="margin-top:0;">Who Needs to Act</h2>
     <table><thead><tr><th>Owner</th><th style="text-align:right;">Cases</th></tr></thead>
-    <tbody><tr><td style="padding:7px 12px;border-bottom:1px solid #EEE;">CA to handle</td><td style="padding:7px 12px;border-bottom:1px solid #EEE;text-align:right;"><strong>2</strong></td></tr></tbody></table></div>
+    <tbody><tr><td style="padding:7px 12px;border-bottom:1px solid #EEE;">CA to handle</td><td style="padding:7px 12px;border-bottom:1px solid #EEE;text-align:right;"><strong>1</strong></td></tr><tr><td style="padding:7px 12px;border-bottom:1px solid #EEE;">Manually Review</td><td style="padding:7px 12px;border-bottom:1px solid #EEE;text-align:right;"><strong>1</strong></td></tr></tbody></table></div>
 </div>
 
 <h2>Latency &amp; Tokens</h2>
@@ -69,7 +71,7 @@ th { background: #5A31C4; color: #fff; padding: 8px 12px; text-align: left; font
   <details style="background:#fff;border:1px solid #E8E8EE;border-radius:8px;margin-bottom:10px;padding:4px 16px;">
     <summary style="cursor:pointer;padding:10px 0;list-style:none;">
       <div style="display:flex;align-items:center;gap:10px;">
-        <span style="background:#E8F5E9;color:#2E7D32;padding:2px 10px;border-radius:12px;font-size:10px;font-weight:700;">PASS</span>
+        <span style="background:#E8F5E9;color:#2E7D32;padding:2px 10px;border-radius:12px;font-size:10px;font-weight:700;">PASS</span> <span style="background:#E8EAF6;color:#3949AB;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;">MOCK DATA</span>
         <span style="font-family:Consolas,monospace;font-weight:600;font-size:12px;">billing_check_balance</span>
         <span style="font-size:10px;margin-left:auto;">
           <strong style="color:#000;font-weight:700;">Goal: 2/2 &middot;
@@ -92,7 +94,7 @@ th { background: #5A31C4; color: #fff; padding: 8px 12px; text-align: left; font
   <details style="background:#fff;border:1px solid #E8E8EE;border-radius:8px;margin-bottom:10px;padding:4px 16px;">
     <summary style="cursor:pointer;padding:10px 0;list-style:none;">
       <div style="display:flex;align-items:center;gap:10px;">
-        <span style="background:#E8F5E9;color:#2E7D32;padding:2px 10px;border-radius:12px;font-size:10px;font-weight:700;">PASS</span>
+        <span style="background:#E8F5E9;color:#2E7D32;padding:2px 10px;border-radius:12px;font-size:10px;font-weight:700;">PASS</span> <span style="background:#E8EAF6;color:#3949AB;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;">MOCK DATA</span>
         <span style="font-family:Consolas,monospace;font-weight:600;font-size:12px;">billing_report_roaming_charge</span>
         <span style="font-size:10px;margin-left:auto;">
           <strong style="color:#000;font-weight:700;">Goal: 3/3 &middot;
@@ -115,7 +117,7 @@ th { background: #5A31C4; color: #fff; padding: 8px 12px; text-align: left; font
   <details style="background:#fff;border:1px solid #E8E8EE;border-radius:8px;margin-bottom:10px;padding:4px 16px;">
     <summary style="cursor:pointer;padding:10px 0;list-style:none;">
       <div style="display:flex;align-items:center;gap:10px;">
-        <span style="background:#E8F5E9;color:#2E7D32;padding:2px 10px;border-radius:12px;font-size:10px;font-weight:700;">PASS</span>
+        <span style="background:#E8F5E9;color:#2E7D32;padding:2px 10px;border-radius:12px;font-size:10px;font-weight:700;">PASS</span> <span style="background:#E8EAF6;color:#3949AB;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;">MOCK DATA</span>
         <span style="font-family:Consolas,monospace;font-weight:600;font-size:12px;">billing_dispute_charge</span>
         <span style="font-size:10px;margin-left:auto;">
           <strong style="color:#000;font-weight:700;">Goal: 3/3 &middot;
@@ -138,7 +140,7 @@ th { background: #5A31C4; color: #fff; padding: 8px 12px; text-align: left; font
   <details style="background:#fff;border:1px solid #E8E8EE;border-radius:8px;margin-bottom:10px;padding:4px 16px;">
     <summary style="cursor:pointer;padding:10px 0;list-style:none;">
       <div style="display:flex;align-items:center;gap:10px;">
-        <span style="background:#FDECEA;color:#C0392B;padding:2px 10px;border-radius:12px;font-size:10px;font-weight:700;">FAIL</span>
+        <span style="background:#FDECEA;color:#C0392B;padding:2px 10px;border-radius:12px;font-size:10px;font-weight:700;">FAIL</span> <span style="background:#E8EAF6;color:#3949AB;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;">MOCK DATA</span>
         <span style="font-family:Consolas,monospace;font-weight:600;font-size:12px;">billing_switch_to_autopay</span>
         <span style="font-size:10px;margin-left:auto;">
           <strong style="color:#000;font-weight:700;">Goal: 1/2 &middot;
@@ -146,7 +148,7 @@ th { background: #5A31C4; color: #fff; padding: 8px 12px; text-align: left; font
           <span style="color:#888;">&middot; 3 turns &middot; <a href="https://console.cloud.google.com/demo/insight/ddd444" target="_blank" style="color:#5A31C4;">open conversation</a></span></span>
       </div>
       <div style="margin-top:4px;display:flex;gap:8px;flex-wrap:wrap;"><span style="background:#EFFAD1;color:#5C7A00;padding:1px 8px;border-radius:8px;font-size:9px;font-weight:700;">Semantic Similarity: <span style="color:#C0392B;">1/4</span></span><span style="background:#E3F2FD;color:#1565C0;padding:1px 8px;border-radius:8px;font-size:9px;font-weight:700;">Tool Correctness: <span style="color:#C0392B;">50%</span></span><span style="background:#E8F5E9;color:#2E7D32;padding:1px 8px;border-radius:8px;font-size:9px;font-weight:700;">Hallucination: None Detected</span></div>
-      <div style="margin-top:6px;font-size:11px;color:#444;max-width:68%;"><strong>Failure summary:</strong> Bot enrolled autopay without reading back the cycle date confirmation line.</div>
+      <div style="margin-top:6px;font-size:11px;color:#444;max-width:68%;"><strong>Failure summary:</strong> Bot enrolled autopay without reading back the cycle date confirmation line.</div><div style="margin-top:6px;font-size:11px;color:#D6212B;max-width:68%;"><strong>Tool error:</strong> <strong>update_autopay</strong> &mdash; Backend error: autopay enrolment rejected (sample)</div>
     </summary>
     <div style="padding:8px 0 14px;">
       
@@ -172,7 +174,8 @@ Bot: You're all set, autopay is now active on your account.</div>
   <details style="background:#fff;border:1px solid #E8E8EE;border-radius:8px;margin-bottom:10px;padding:4px 16px;">
     <summary style="cursor:pointer;padding:10px 0;list-style:none;">
       <div style="display:flex;align-items:center;gap:10px;">
-        <span style="background:#FDECEA;color:#C0392B;padding:2px 10px;border-radius:12px;font-size:10px;font-weight:700;">FAIL</span>
+        <span style="background:#FDECEA;color:#C0392B;padding:2px 10px;border-radius:12px;font-size:10px;font-weight:700;">FAIL</span> <span style="background:#E8EAF6;color:#3949AB;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;">MOCK DATA</span>
+        <span title="No diagnosis for this case yet: read it and decide who acts" style="background:rgb(255,240,229);color:rgb(242,107,15);padding:2px 10px;border-radius:12px;font-size:10px;font-weight:700;">MANUALLY REVIEW</span>
         <span style="font-family:Consolas,monospace;font-weight:600;font-size:12px;">billing_change_due_date</span>
         <span style="font-size:10px;margin-left:auto;">
           <strong style="color:#000;font-weight:700;">Goal: 1/2 &middot;
@@ -184,16 +187,7 @@ Bot: You're all set, autopay is now active on your account.</div>
     </summary>
     <div style="padding:8px 0 14px;">
       
-      <div style="margin-top:10px;background:#F5FAE3;border-left:3px solid #5A31C4;border-radius:4px;padding:10px 14px;">
-        <div style="font-size:10px;font-weight:800;color:#5A31C4;text-transform:uppercase;letter-spacing:.3px;">
-          CA TO HANDLE: EXPECTATION_FAIL &middot; instruction_edit &middot; confidence: medium
-        </div>
-        <div style="margin-top:6px;font-size:11px;color:#333;line-height:1.55;">The 'Change Due Date' step's range-validation sub-step (2.1, 'Verify requested day is between 1 and 28') only fires after change_due_date is called, not before, per the current ordering in instruction.txt. The agent called the tool first and validated after, so an out-of-range day was already submitted by the time the check ran.</div>
-        <div style="margin-top:8px;font-size:10px;font-weight:700;color:#666;">EVIDENCE</div><ul style="margin:4px 0 0 16px;font-size:10.5px;"><li style="margin-bottom:6px;"><span style="font-size:9px;color:#888;font-family:Consolas,monospace;">instruction.txt, step 'Change Due Date'</span><br>&ldquo;1. Call {@TOOL: change_due_date} with ban={ban}, requested_day={requested_day}.
-2.1. Verify requested day is between 1 and 28.&rdquo;</li></ul>
-        <div style="margin-top:8px;font-size:10px;font-weight:700;color:#666;">FILES TO EDIT</div><ul style="margin:4px 0 0 16px;font-size:10.5px;"><li><code>agents/Billing_and_Payments/instruction.txt</code></li></ul>
-        <div style="margin-top:8px;font-size:11px;"><strong>Fix:</strong> Reorder step 'Change Due Date' so the 1-28 range check (2.1) runs BEFORE calling change_due_date, not after.</div>
-      </div>
+      <div style="margin-top:10px;background:rgb(255,246,238);border-left:3px solid rgb(242,107,15);border-radius:4px;padding:10px 14px;"><div style="font-size:10px;font-weight:800;color:rgb(242,107,15);text-transform:uppercase;letter-spacing:.3px;">MANUALLY REVIEW &middot; not triaged</div><div style="margin-top:6px;font-size:11px;color:rgb(51,51,51);line-height:1.55;">This failing case has no diagnosis, so nobody is assigned yet. Read the failure summary above and the transcript below, then decide who acts: the agent owner (CA), the sim or mock data (QA), or neither (a flaky run).</div></div>
       <details style="margin-top:10px;">
         <summary style="cursor:pointer;font-size:10px;font-weight:700;color:#1565C0;">Full transcript</summary>
         <div style="margin-top:6px;background:#F7F9FC;border:1px solid #DCE4F0;border-radius:6px;padding:10px;
@@ -205,7 +199,7 @@ Bot: You're all set, autopay is now active on your account.</div>
   <details style="background:#fff;border:1px solid #E8E8EE;border-radius:8px;margin-bottom:10px;padding:4px 16px;">
     <summary style="cursor:pointer;padding:10px 0;list-style:none;">
       <div style="display:flex;align-items:center;gap:10px;">
-        <span style="background:#E8F5E9;color:#2E7D32;padding:2px 10px;border-radius:12px;font-size:10px;font-weight:700;">PASS</span>
+        <span style="background:#E8F5E9;color:#2E7D32;padding:2px 10px;border-radius:12px;font-size:10px;font-weight:700;">PASS</span> <span style="background:#E8EAF6;color:#3949AB;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;">MOCK DATA</span>
         <span style="font-family:Consolas,monospace;font-weight:600;font-size:12px;">billing_fr_check_balance</span>
         <span style="font-size:10px;margin-left:auto;">
           <strong style="color:#000;font-weight:700;">Goal: 2/2 &middot;
