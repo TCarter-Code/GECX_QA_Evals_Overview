@@ -28,6 +28,9 @@ would talk to it — and tells you exactly what changed, what broke, and what st
 - **One report, ready to share.** A clean, self-contained page with the results, built to forward to a
   teammate or a stakeholder without any setup on their end.
   → [See a sample report](examples/sample-qa-report.html) (download and open in a browser — sample data only).
+- **Fix-and-retry without the noise.** Re-run only the sims you fixed and the report still shows the whole suite: two runs,
+  the first results and the result after the fixes, with the failures at the top and a clear tag on each one that got fixed.
+  Your retries don't pile up as extra reports.
 - **Scales with your org.** One agent or an entire app, one person or a distributed team syncing results
   through your own source control — no extra infrastructure required.
 - **Mock data, built in.** Sims can run against fake tool responses, so no real customer accounts are needed. Every report
